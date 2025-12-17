@@ -20,15 +20,13 @@ This project uses modern Python tooling. You can install it using `pip` or any s
 
 1. **Clone the repository:**
    ```bash
-   git clone <repository_url>
+   git clone git@github.com:yubraaj11/distant-frames.git
    cd distant-frames
    ```
 
 2. **Install Dependencies:**
    ```bash
-   pip install -r requirements.txt
-   # OR if you are using uv/poetry (recommended as per pyproject.toml)
-   uv sync
+   uv sync --frozen
    ```
 
 ## 💻 Usage
@@ -37,7 +35,7 @@ This project uses modern Python tooling. You can install it using `pip` or any s
 Run the script by providing the path to your video file:
 
 ```bash
-python main.py path/to/your/video.mp4
+uv run distant_frames/cli.py path/to/your/video.mp4
 ```
 
 ### Options
@@ -52,12 +50,12 @@ python main.py path/to/your/video.mp4
 
 **Extract frames with default settings:**
 ```bash
-python main.py my_vacation.mp4
+uv run distant_frames/cli.py my_vacation.mp4
 ```
 
 **Save to a custom folder with a stricter similarity check (fewer frames):**
 ```bash
-python main.py my_vacation.mp4 --output best_shots --threshold 0.95
+uv run distant_frames/cli.py my_vacation.mp4 --output best_shots --threshold 0.95
 ```
 
 **Save more frames (looser similarity check):**
