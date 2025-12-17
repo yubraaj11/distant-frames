@@ -44,7 +44,7 @@ uv run distant_frames/cli.py path/to/your/video.mp4
 |----------|-------------|---------|
 | `video_path` | Path to the input video file (Required). | N/A |
 | `--output` | Directory to save the extracted frames. | `extracted_frames` |
-| `--threshold` | Similarity threshold (0.0 to 1.0). Frames with similarity **higher** than this value compared to the last saved frame will be **dropped**. | `0.8` |
+| `--threshold` | Similarity threshold (0.0 to 1.0). Frames with similarity **higher** than this value compared to the last saved frame will be **dropped**. | `0.65` |
 
 ### Examples
 
@@ -60,7 +60,7 @@ uv run distant_frames/cli.py my_vacation.mp4 --output best_shots --threshold 0.9
 
 **Save more frames (looser similarity check):**
 ```bash
-python main.py my_vacation.mp4 --output all_shots --threshold 0.6
+uv run distant_frames/cli.py my_vacation.mp4 --output all_shots --threshold 0.6
 ```
 
 ## 🔍 How It Works
