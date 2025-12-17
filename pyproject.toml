@@ -1,0 +1,21 @@
+[project]
+name = "distant-frames"
+version = "0.1.0"
+description = "Smart video frame extraction tool"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "opencv-python>=4.10.0",
+]
+
+[project.scripts]
+distant-frames = "distant_frames.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+
+
+
+

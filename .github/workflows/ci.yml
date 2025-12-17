@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python 3.12
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+        
+    - name: Install uv
+      run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      
+    - name: Install dependencies
+      run: |
+        uv sync --frozen
+        
+    - name: Build package
+      run: |
+        uv build
+        
+    - name: Verify installation
+      run: |
+        # Install the built package from the dist directory
+        uv pip install dist/*.whl
+        # Verify command works
+        uv run distant-frames --help
