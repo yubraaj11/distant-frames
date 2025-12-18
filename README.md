@@ -16,7 +16,21 @@
 
 ## 📦 Installation
 
-This project uses modern Python tooling. You can install it using `pip` or any standard package manager.
+### From PyPI (Recommended)
+
+Install the latest stable release using pip:
+
+```bash
+pip install distant-frames
+
+or 
+
+uv add distant-frames
+```
+
+### From Source (Development)
+
+For development or to use the latest unreleased features:
 
 1. **Clone the repository:**
    ```bash
