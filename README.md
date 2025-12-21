@@ -1,3 +1,8 @@
+![PyPI - Version](https://img.shields.io/pypi/v/distant-frames)
+![PyPI - Status](https://img.shields.io/pypi/status/distant-frames)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/distant-frames)
+![GitHub License](https://img.shields.io/github/license/yubraaj11/distant-frames)
+
 # Distant Frames
 
 **Distant Frames** is a smart video frame extraction tool designed to capture distinct visual moments from video files. Instead of simply saving every Nth frame, it analyzes the visual similarity between consecutive potential frames and only saves those that are sufficiently different.
