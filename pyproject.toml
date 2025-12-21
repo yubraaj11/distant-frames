@@ -20,6 +20,7 @@ classifiers = [
 ]
 dependencies = [
     "opencv-python>=4.10.0",
+    "typer>=0.9.0",
 ]
 
 [project.urls]
@@ -28,7 +29,7 @@ Repository = "https://github.com/yubraaj11/distant-frames"
 Issues = "https://github.com/yubraaj11/distant-frames/issues"
 
 [project.scripts]
-distant-frames = "distant_frames.cli:main"
+distant-frames = "distant_frames.cli:app"
 
 [build-system]
 requires = ["hatchling"]
