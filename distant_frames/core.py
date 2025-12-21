@@ -32,7 +32,7 @@ def calculate_similarity(frame1, frame2):
     similarity = cv2.compareHist(hist1, hist2, cv2.HISTCMP_CORREL)
     return similarity
 
-def extract_frames(video_path, output_folder, threshold=0.9):
+def extract_frames(video_path, output_folder, threshold=0.65):
     """Extracts distinct frames from a video file based on visual similarity.
 
     The function samples the video at 1-second intervals. It compares the current
@@ -50,7 +50,7 @@ def extract_frames(video_path, output_folder, threshold=0.9):
         threshold (float, optional): Similarity threshold (0.0 to 1.0).
             Frames with similarity higher than this value regarding the last
             saved frame will be dropped. Higher values mean stricter
-            deduplication (fewer frames saved). Defaults to 0.9.
+            deduplication (fewer frames saved). Defaults to 0.65.
 
     Returns:
         None
@@ -80,8 +80,9 @@ def extract_frames(video_path, output_folder, threshold=0.9):
     current_frame_idx = 0
     saved_count = 0
     last_saved_frame = None
-    prev_saved_frame = None
-    force_fallback_to_prev = False
+    last_saved_timestamp = None
+    skip_reference_frame = None
+    skip_reference_timestamp = None
 
     while True:
         # Set position to the next second
@@ -98,35 +99,44 @@ def extract_frames(video_path, output_folder, threshold=0.9):
         if last_saved_frame is None:
             should_save = True
             similarity = 0.0 # No previous frame
+            print(f"[{timestamp:.1f}s] First frame → SAVE")
         else:
             # Determine reference frame
-            reference_frame = last_saved_frame
-            if force_fallback_to_prev and prev_saved_frame is not None:
-                reference_frame = prev_saved_frame
-                # We used fallback, so reset the flag for the next check 
-                # (unless we skip again, which re-sets it below)
-                force_fallback_to_prev = False 
+            # If we have a skip reference (from previous skip), use that
+            # Otherwise use the last saved frame
+            if skip_reference_frame is not None:
+                reference_frame = skip_reference_frame
+                ref_timestamp = skip_reference_timestamp
+                ref_label = "skip_ref"
+            else:
+                reference_frame = last_saved_frame
+                ref_timestamp = last_saved_timestamp
+                ref_label = "last"
 
             similarity = calculate_similarity(reference_frame, frame)
+            
             if similarity < threshold:
                 should_save = True
+                print(f"[{timestamp:.1f}s] vs {ref_label}@{ref_timestamp:.1f}s | sim={similarity:.3f} → SAVE")
+                # Clear skip reference when we save
+                skip_reference_frame = None
+                skip_reference_timestamp = None
             else:
-                print(f"Skipping frame at {timestamp:.2f}s (Similarity: {similarity:.4f})")
-                force_fallback_to_prev = True
+                print(f"[{timestamp:.1f}s] vs {ref_label}@{ref_timestamp:.1f}s | sim={similarity:.3f} → SKIP")
+                # When we skip, set the skip reference to the last saved frame
+                # so next comparison uses this same reference
+                skip_reference_frame = last_saved_frame
+                skip_reference_timestamp = last_saved_timestamp
 
         if should_save:
             output_filename = os.path.join(output_folder, f"frame_{timestamp:.2f}.jpg")
             cv2.imwrite(output_filename, frame)
             
-            # Update history
-            prev_saved_frame = last_saved_frame
+            # Update last saved frame
             last_saved_frame = frame
-            
-            # Reset fallback flag because we just saved a new distinct frame
-            force_fallback_to_prev = False
+            last_saved_timestamp = timestamp
             
             saved_count += 1
-            print(f"Saved {output_filename} (Similarity: {similarity:.4f})")
 
         current_frame_idx += frame_interval
 
