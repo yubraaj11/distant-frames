@@ -1,6 +1,7 @@
 ![PyPI - Version](https://img.shields.io/pypi/v/distant-frames)
 ![PyPI - Status](https://img.shields.io/pypi/status/distant-frames)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/distant-frames)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/distant-frames)
 ![GitHub License](https://img.shields.io/github/license/yubraaj11/distant-frames)
 
 # Distant Frames
