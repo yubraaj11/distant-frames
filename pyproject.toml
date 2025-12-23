@@ -27,6 +27,7 @@ dependencies = [
 Homepage = "https://github.com/yubraaj11/distant-frames"
 Repository = "https://github.com/yubraaj11/distant-frames"
 Issues = "https://github.com/yubraaj11/distant-frames/issues"
+Release Notes = "https://github.com/yubraaj11/distant-frames/blob/main/RELEASE_NOTES.md"
 
 [project.scripts]
 distant-frames = "distant_frames.cli:app"
