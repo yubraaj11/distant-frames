@@ -1,6 +1,6 @@
 [project]
 name = "distant-frames"
-version = "0.2.0"
+version = "0.2.1"
 description = "Smart video frame extraction tool"
 readme = "README.md"
 requires-python = ">=3.12"
@@ -27,7 +27,7 @@ dependencies = [
 Homepage = "https://github.com/yubraaj11/distant-frames"
 Repository = "https://github.com/yubraaj11/distant-frames"
 Issues = "https://github.com/yubraaj11/distant-frames/issues"
-Release Notes = "https://github.com/yubraaj11/distant-frames/blob/main/RELEASE_NOTES.md"
+ReleaseNotes = "https://github.com/yubraaj11/distant-frames/blob/main/RELEASE_NOTES.md"
 
 [project.scripts]
 distant-frames = "distant_frames.cli:app"
