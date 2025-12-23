@@ -1,6 +1,12 @@
 # Release Notes
 
-## Version 0.2.0 (Upcoming)
+## Version 0.2.1
+
+### Updated File Name
+
+- **Concise Filenames**: Extracted frames now use a shortened 8-character UUID (e.g., `_frame_a1b2c3d4.jpg`) instead of the full 32-character UUID. This ensures uniqueness while keeping filenames cleaner and easier to manage.
+
+## Version 0.2.0 
 
 ### 🎨 Enhanced CLI Interface
 

@@ -1,5 +1,7 @@
 import cv2
 import os
+from pathlib import Path
+import uuid
 
 def calculate_similarity(frame1, frame2):
     """Calculates similarity between two frames using Histogram Correlation.
@@ -62,7 +64,8 @@ def extract_frames(video_path, output_folder, threshold=0.65):
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
 
-    cap = cv2.VideoCapture(video_path)
+    video_file_name = Path(video_path).stem
+    cap = cv2.VideoCapture(str(video_path))
     if not cap.isOpened():
         print("Error: Could not open video.")
         return
@@ -129,7 +132,7 @@ def extract_frames(video_path, output_folder, threshold=0.65):
                 skip_reference_timestamp = last_saved_timestamp
 
         if should_save:
-            output_filename = os.path.join(output_folder, f"frame_{timestamp:.2f}.jpg")
+            output_filename = os.path.join(output_folder, f"{video_file_name}_frame_{uuid.uuid4().hex[:8]}.jpg")
             cv2.imwrite(output_filename, frame)
             
             # Update last saved frame
