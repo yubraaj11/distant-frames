@@ -51,11 +51,12 @@ For development or to use the latest unreleased features:
 
 ## 💻 Usage
 
-### Basic Command
-Run the script by providing the path to your video file:
+### Command Line Interface
+
+Once installed, you can use the `distant-frames` command from anywhere:
 
 ```bash
-uv run distant_frames/cli.py path/to/your/video.mp4
+distant-frames path/to/video.mp4 -o path/to/output -t 0.75
 ```
 
 ### Options
@@ -63,24 +64,19 @@ uv run distant_frames/cli.py path/to/your/video.mp4
 | Argument | Description | Default |
 |----------|-------------|---------|
 | `video_path` | Path to the input video file (Required). | N/A |
-| `--output` | Directory to save the extracted frames. | `extracted_frames` |
-| `--threshold` | Similarity threshold (0.0 to 1.0). Frames with similarity **higher** than this value compared to the last saved frame will be **dropped**. | `0.65` |
+| `--output`, `-o` | Directory to save the extracted frames. | `extracted_frames` |
+| `--threshold`, `-t` | Defines the similarity score threshold (0.0 to 1.0) between frames. If the similarity score is **higher** than this value, the frame will be discarded. | `0.65` |
 
 ### Examples
 
 **Extract frames with default settings:**
 ```bash
-uv run distant_frames/cli.py my_vacation.mp4
+distant-frames my_vacation.mp4
 ```
 
-**Save to a custom folder with a stricter similarity check (fewer frames):**
+**Save to a custom folder with a stricter similarity check:**
 ```bash
-uv run distant_frames/cli.py my_vacation.mp4 --output best_shots --threshold 0.95
-```
-
-**Save more frames (looser similarity check):**
-```bash
-uv run distant_frames/cli.py my_vacation.mp4 --output all_shots --threshold 0.6
+distant-frames my_vacation.mp4 -o best_shots -t 0.95
 ```
 
 ## 🔍 How It Works
