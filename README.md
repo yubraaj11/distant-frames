@@ -14,6 +14,8 @@
 - **Histogram Correlation**: Uses HSV color space histogram comparison for robust similarity detection.
 - **Configurable Threshold**: Fine-tune the sensitivity of frame dropping to suit your specific video content.
 - **Efficient Processing**: Seeks directly to target timestamps (`CAP_PROP_POS_FRAMES`) for faster processing than frame-by-frame reading.
+- **Custom Start Time**: Begin extraction from any point in the video using a timestamp in seconds.
+- **Open Eyes Filter**: Optionally keep only frames where at least one face with both eyes open is detected, using local Haar cascade classifiers.
 
 ## 🛠️ Prerequisites
 
@@ -65,7 +67,9 @@ distant-frames path/to/video.mp4 -o path/to/output -t 0.75
 |----------|-------------|---------|
 | `video_path` | Path to the input video file (Required). | N/A |
 | `--output`, `-o` | Directory to save the extracted frames. | `extracted_frames` |
-| `--threshold`, `-t` | Defines the similarity score threshold (0.0 to 1.0) between frames. If the similarity score is **higher** than this value, the frame will be discarded. | `0.65` |
+| `--threshold`, `-t` | Similarity score threshold (0.0 to 1.0). Frames with a score **higher** than this value are discarded. | `0.65` |
+| `--start`, `-s` | Timestamp in seconds to begin extraction from. | `0.0` |
+| `--open-eyes` | When set, only saves frames where at least one face with both eyes open is detected. | Off |
 
 ### Examples
 
@@ -79,14 +83,30 @@ distant-frames my_vacation.mp4
 distant-frames my_vacation.mp4 -o best_shots -t 0.95
 ```
 
+**Start extraction from a specific timestamp (e.g. 1 minute 30 seconds in):**
+```bash
+distant-frames interview.mp4 -s 90
+```
+
+**Only keep frames where a person's eyes are open:**
+```bash
+distant-frames interview.mp4 --open-eyes -o key_frames
+```
+
+**Combine all options:**
+```bash
+distant-frames interview.mp4 -s 90 -t 0.80 --open-eyes -o key_frames
+```
+
 ## 🔍 How It Works
 
-1. **Sampling**: The script checks one frame every second (based on the video's FPS).
+1. **Sampling**: The script checks one frame every second (based on the video's FPS), starting from `--start` if provided.
 2. **Comparison**: It compares the current candidate frame against the **last successfully saved frame**.
 3. **Algorithm**: It converts frames to HSV color space and calculates Normalized Histogram Correlation.
 4. **Decision**:
-   - If similarity < `threshold`: **SAVE** (The scene has changed).
+   - If similarity < `threshold`: candidate for saving.
    - If similarity >= `threshold`: **SKIP** (The scene is too similar).
+5. **Open Eyes Filter** *(optional)*: If `--open-eyes` is set, a candidate frame is only saved if a face with two open eyes is detected using Haar cascade classifiers.
 
 ## 🧪 Testing
 
