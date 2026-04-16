@@ -1,5 +1,42 @@
 # Release Notes
 
+## Version 0.3.1
+
+### Fix
+
+- **Local entry point**: Added `main.py` at the repo root so users who clone the repository can run the tool directly with `uv run main.py` without installing the package.
+
+---
+
+## Version 0.3.0
+
+### New Features
+
+- **Start timestamp** (`--start` / `-s`): Begin extraction from any point in the video by passing a timestamp in seconds. The video duration is validated upfront, and the startup log now shows duration and the effective start time.
+
+- **Open-eyes filter** (`--open-eyes`): When enabled, only frames where at least one face with both eyes open is detected are saved. Detection uses a two-stage Haar cascade pipeline (face → eye ROI) and runs only on frames that have already passed the similarity check, so it adds no overhead on skipped frames.
+
+- **Local Haar cascade classifiers**: Cascade XML files are now loaded from the project-local `haarcascade_classifiers/` directory (`haarcascade_frontalface_default.xml` and `haarcascade_eye.xml`) instead of the OpenCV bundle. No new dependencies are required.
+
+### Usage Examples
+
+**Start from 90 seconds in:**
+```bash
+distant-frames interview.mp4 -s 90
+```
+
+**Only keep frames with open eyes:**
+```bash
+distant-frames interview.mp4 --open-eyes -o key_frames
+```
+
+**Combine all options:**
+```bash
+distant-frames interview.mp4 -s 90 -t 0.80 --open-eyes -o key_frames
+```
+
+---
+
 ## Version 0.2.1
 
 ### Updated File Name
