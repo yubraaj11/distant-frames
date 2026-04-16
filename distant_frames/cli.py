@@ -35,15 +35,30 @@ def main(
             max=1.0,
             help="Similarity threshold (0.0-1.0). Higher values mean stricter deduplication (fewer frames saved)."
         )
-    ] = 0.65,
+    ] = 0.75,
+    start_time: Annotated[
+        float,
+        typer.Option(
+            "--start", "-s",
+            min=0.0,
+            help="Start extraction from this timestamp (in seconds). Defaults to 0 (beginning of video)."
+        )
+    ] = 0.0,
+    open_eyes_only: Annotated[
+        bool,
+        typer.Option(
+            "--open-eyes",
+            help="Only save frames where at least one face with both eyes open is detected."
+        )
+    ] = False,
 ):
     """
     Extract distinct frames from a video file based on visual similarity.
-    
+
     The tool samples the video at 1-second intervals and compares consecutive frames.
     Frames that are too similar to previously saved frames are automatically skipped.
     """
-    extract_frames(str(video_path), output, threshold)
+    extract_frames(str(video_path), output, threshold, start_time, open_eyes_only)
 
 if __name__ == "__main__":
     app()
