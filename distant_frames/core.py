@@ -3,7 +3,7 @@ import os
 from pathlib import Path
 import uuid
 
-_CASCADES_DIR = Path(__file__).parent.parent / "haarcascade_classifiers"
+_CASCADES_DIR = Path(__file__).parent / "haarcascade_classifiers"
 
 def _load_eye_cascades():
     """Load and return (face_cascade, eye_cascade) from the local haarcascade_classifiers/ directory."""
