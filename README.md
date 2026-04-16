@@ -36,9 +36,9 @@ or
 uv add distant-frames
 ```
 
-### From Source (Development)
+### From Source (Local)
 
-For development or to use the latest unreleased features:
+Clone the repo and run directly without installing the package:
 
 1. **Clone the repository:**
    ```bash
@@ -46,19 +46,28 @@ For development or to use the latest unreleased features:
    cd distant-frames
    ```
 
-2. **Install Dependencies:**
+2. **Install dependencies:**
    ```bash
    uv sync --frozen
    ```
 
+3. **Run via `main.py`:**
+   ```bash
+   uv run main.py path/to/video.mp4 -o output_dir -t 0.75
+   ```
+
 ## 💻 Usage
 
-### Command Line Interface
-
-Once installed, you can use the `distant-frames` command from anywhere:
+### Installed package
 
 ```bash
 distant-frames path/to/video.mp4 -o path/to/output -t 0.75
+```
+
+### Cloned repo (no install)
+
+```bash
+uv run main.py path/to/video.mp4 -o path/to/output -t 0.75
 ```
 
 ### Options
