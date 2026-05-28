@@ -177,7 +177,7 @@ def extract_frames(video_path, output_folder, threshold=0.65, start_time=0.0, op
                 should_save = False
 
         if should_save:
-            output_filename = os.path.join(output_folder, f"{video_file_name}_frame_{uuid.uuid4().hex[:8]}.jpg")
+            output_filename = os.path.join(output_folder, f"{video_file_name}_frame_{timestamp:.1f}.jpg")
             cv2.imwrite(output_filename, frame)
             
             # Update last saved frame
