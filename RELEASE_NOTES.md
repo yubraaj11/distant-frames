@@ -1,5 +1,13 @@
 # Release Notes
 
+## Version 0.3.2
+
+### Improvements
+
+- **Temporal Consistency**: Replaced random UUIDs in filenames with video timestamps (e.g., `_frame_12.5.jpg`). This ensures that extracted frames are naturally sorted by their sequence in the video, making it easier to maintain temporal order.
+
+---
+
 ## Version 0.3.1
 
 ### Fix
