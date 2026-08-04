@@ -33,9 +33,10 @@ def main(
             "--threshold", "-t",
             min=0.0,
             max=1.0,
-            help="Similarity threshold (0.0-1.0). Higher values mean stricter deduplication (fewer frames saved)."
+            help="Similarity threshold (0.0-1.0). A frame is kept when its similarity to the last "
+                 "kept frame falls below this value, so raising it keeps MORE frames, not fewer."
         )
-    ] = 0.75,
+    ] = 0.78,
     start_time: Annotated[
         float,
         typer.Option(
@@ -51,6 +52,15 @@ def main(
             help="Only save frames where at least one face with both eyes open is detected."
         )
     ] = False,
+    refine: Annotated[
+        bool,
+        typer.Option(
+            "--refine",
+            help="Re-check frames the histogram would skip with a HOG/ORB descriptor when any "
+                 "region of the picture changes sharply. Catches title/text changes on slides that "
+                 "the histogram scores as identical. Only ever adds frames."
+        )
+    ] = False,
 ):
     """
     Extract distinct frames from a video file based on visual similarity.
@@ -58,7 +68,7 @@ def main(
     The tool samples the video at 1-second intervals and compares consecutive frames.
     Frames that are too similar to previously saved frames are automatically skipped.
     """
-    extract_frames(str(video_path), output, threshold, start_time, open_eyes_only)
+    extract_frames(str(video_path), output, threshold, start_time, open_eyes_only, refine)
 
 if __name__ == "__main__":
     app()
